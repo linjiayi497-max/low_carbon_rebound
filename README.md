@@ -1,58 +1,68 @@
-# Carbon Footprint Prediction & Policy Simulation Dashboard
+# 低碳行为反弹预测与政策模拟看板
 
-An interactive Streamlit web application designed to predict carbon emissions, evaluate rebound propensities (Direct and Psychological), and simulate the effects of behavioral policies. 
+这是一个面向 ESG、能源经济、可持续发展、公共政策、咨询和商业分析岗位的低碳行为分析项目。项目使用 Streamlit 构建交互式看板，预测个人碳足迹和低碳行为反弹倾向，并通过 Monte Carlo 模拟比较不同政策干预的效果。
 
-This project operationalises findings from a working paper on demand-side low-carbon behaviour, tracking non-pecuniary costs (NPC) and masking effects among consumers.
+## 项目背景
 
-## Features
+低碳行为并不一定带来等比例减排。消费者在采取某些低碳行为后，可能出现直接反弹或心理反弹，例如因为已经做出环保行为而增加其他消费。项目围绕这一问题，评估行为采纳难度、非金钱成本、反弹倾向和净减排效果。
 
-1. **Personal Carbon Footprint Calculator**
-   - Inputs for demographics and 6 key low-carbon behaviors: EV adoption, high-speed rail usage, energy-efficient appliances, waste sorting, reducing disposable utensils, and protein substitution (diet).
-   - Real baseline data from the **Our World in Data** (Kaggle-equivalent CO2 footprints country data).
+## 核心功能
 
-2. **Rebound Prediction**
-   - Uses XGBoost models trained on synthetic behavioral data.
-   - Outputs **Direct Rebound Propensity** and **Psychological Rebound Propensity**.
-   - Includes full interpretability using **SHAP Waterfall charts** to identify driving factors in individual predictions.
+- 个人碳足迹计算：输入人口属性和低碳行为，估算个人碳排放基线。
+- 低碳行为建模：覆盖电动车、高铁、节能家电、垃圾分类、减少一次性餐具、蛋白替代等行为。
+- 反弹倾向预测：使用 XGBoost 模型预测直接反弹和心理反弹。
+- SHAP 可解释性：展示个体预测中最关键的驱动因素。
+- 个性化建议：结合反弹率和非金钱成本，给出净减排最高的行为清单。
+- 政策模拟：用 Monte Carlo 模拟 1,000 名居民，比较无干预、碳税、碳税+助推政策的效果。
 
-3. **Personalised Recommendation Engine**
-   - Evaluates behaviors against an individual's predicted rebound rates and absolute Non-Pecuniary Cost (difficulty of adoption).
-   - Generates an actionable, ranked checklist of which lifestyle changes will strictly yield the highest *net* emission reductions.
+## 项目结构
 
-4. **Policy Simulation (Monte Carlo)**
-   - Simulates 1,000 citizens and visualizes different distributions of net emissions reduction using Plotly.
-   - Compares: Baseline (No Intervention), Carbon Tax Only, and Carbon Tax + Nudges.
+```text
+.
+|-- app.py                 # Streamlit 主应用
+|-- data_pipeline.py       # 外部碳排数据处理与模拟用户数据生成
+|-- train_models.py        # XGBoost 模型训练
+|-- data/                  # 国家碳足迹数据与模拟用户数据
+|-- models/                # 训练后的模型文件
+|-- requirements.txt
+`-- README.md
+```
 
-## Project Structure
+## 快速开始
 
-- `app.py`: Main Streamlit application and UI logic.
-- `data_pipeline.py`: Downloads external CO2 data and generates the synthetic survey respondent dataset.
-- `train_models.py`: Trains the XGBoost regressors and saves valid `.pkl` files based on generated data.
-- `data/`: Contains raw structure of `national_footprint.csv` and `synthetic_users.csv`.
-- `models/`: Pickles for the trained ML models and feature mappers.
-
-## How to Run Locally
-
-1. **Install dependencies**
 ```bash
 pip install -r requirements.txt
-```
-
-2. **Generate the Datasets** (First time only)
-```bash
 python data_pipeline.py
-```
-
-3. **Train the ML Models** (First time only)
-```bash
 python train_models.py
-```
-
-4. **Launch the Dashboard**
-```bash
 streamlit run app.py
 ```
 
-## Academic Context Integration
-- **Masking Effect**: Noticeable when testing High Environmental Identity profiles on Page 2 – these profiles show opposite, sometimes paradoxical rebound limits (e.g. 'moral licensing' via psychological rebound).
-- **NPC Adjustment**: In Page 3, behaviors with high baseline reductions (like EVs) might be deprioritized for strict low-income groups due to NPC modeling.
+## 适配岗位
+
+- ESG / 可持续发展分析实习
+- 能源经济 / 低碳政策研究实习
+- 咨询-战略经营分析实习
+- 国企 / 能源数据分析实习
+- 绿色供应链 / 低碳物流相关岗位
+- 商业分析实习
+
+## 简历表达方向
+
+可强调：
+
+- 搭建低碳行为反弹预测与政策模拟看板，结合 XGBoost、SHAP 和 Monte Carlo 方法评估低碳行为的净减排效果。
+- 将行为采纳难度、直接反弹、心理反弹和政策干预纳入同一分析框架，输出个性化低碳建议与政策对比结果。
+- 支持 ESG、能源政策和可持续消费场景下的数据驱动决策。
+
+## 面试可讲点
+
+- 为什么低碳行为会出现反弹效应。
+- 如何把非金钱成本纳入行为建议排序。
+- SHAP 如何解释不同用户的反弹倾向。
+- Monte Carlo 模拟如何用于政策效果评估。
+- 如何把个人行为模型扩展到群体政策评估。
+
+## 数据说明
+
+项目使用公开碳足迹数据和本地生成的模拟行为数据。若用于简历或面试，应说明该项目是研究型/模拟型数据产品，不应表述为真实政府或企业委托项目。
+
